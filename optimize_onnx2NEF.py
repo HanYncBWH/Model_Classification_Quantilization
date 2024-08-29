@@ -21,16 +21,28 @@ except Exception as e:
     print(f"Simplification failed: {e}")
     optimized_clip = exported_clip  # Use the original model if simplification fails
 
+# Save the model after simplification
+onnx.save(optimized_clip, '/docker_mount/CLIPModel_gen_simplified.onnx')
+print("Saved simplified model.")
+
 # Proceed with the ONNX optimization flow
 try:
     optimized_clip = ktc.onnx_optimizer.torch_exported_onnx_flow(optimized_clip)
+    # Save the model after torch_exported_onnx_flow
+    onnx.save(optimized_clip, '/docker_mount/CLIPModel_gen_after_torch_exported.onnx')
+    print("Saved model after torch_exported_onnx_flow.")
+
     optimized_clip = ktc.onnx_optimizer.onnx2onnx_flow(optimized_clip, eliminate_tail=False, opt_matmul=False)
+    # Save the model after onnx2onnx_flow
+    onnx.save(optimized_clip, '/docker_mount/CLIPModel_gen_after_onnx2onnx.onnx')
+    print("Saved model after onnx2onnx_flow.")
 except Exception as e:
     print(f"ONNX optimization flow failed: {e}")
     optimized_clip = exported_clip  # Fallback to original if optimization fails
 
-# Save the optimized model
-onnx.save(optimized_clip, '/docker_mount/CLIPModel_gen.onnx')
+# Save the final optimized model
+onnx.save(optimized_clip, '/docker_mount/CLIPModel_gen_final.onnx')
+print("Saved final optimized model.")
 
 # Initialize the model configuration
 km = ktc.ModelConfig(32770, "8b28", "720", onnx_model=optimized_clip)
