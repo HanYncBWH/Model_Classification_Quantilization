@@ -1,6 +1,6 @@
 # 步驟說明:
 ### Create by Han Yanç
-# Github Maintain Work flow
+# 要下載的東西和指令：
     步驟一： CLIP onnx opset 18 模型下載網址：https://drive.google.com/file/d/1TiSM0k6EP9wi1bpDgLM-JUYtMc0D6CL1/view?usp=sharing
     步驟二：image_ddata下載網址: https://drive.google.com/drive/folders/1jdmhlpNxYAb5wZXF-R_HOtPU8hNv9wos?usp=drive_link
     步驟三：CLIP模型和image_ddata請放到同一個資料夾並放到
