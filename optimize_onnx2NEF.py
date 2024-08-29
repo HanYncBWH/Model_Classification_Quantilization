@@ -46,6 +46,7 @@ print("Saved final optimized model.")
 
 # Initialize the model configuration
 km = ktc.ModelConfig(32770, "8b28", "720", onnx_model=optimized_clip)
+
 # Preprocess the image data
 def preprocess_clip_model(image_folder):
     img_list = []
@@ -62,10 +63,14 @@ def preprocess_clip_model(image_folder):
         processed_img = np.expand_dims(img, axis=0)
         img_list.append(processed_img)
     return img_list
+
 clip_input_list = preprocess_clip_model('/docker_mount/image_ddata')
-# Run analysis
-bie_model_path = km.analysis({"input": clip_input_list})
+
+# Quantization (Fix-point analysis)
+input_mapping = {"images": clip_input_list}
+bie_model_path = km.analysis(input_mapping, threads=4, quantize_mode="default")
 print("\nFixed-point analysis done. Save bie model to '" + str(bie_model_path) + "'")
+
 # Compile to NEF model
 nef_model_path = ktc.compile([km])
 print("\nCompile done. Save Nef file to '" + str(nef_model_path) + "'")
