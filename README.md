@@ -8,6 +8,6 @@
     ex:docker run --rm -it -v "/Volumes/One Touch/Kneron:/docker_mount" -v "/Users/hanyanc/Documents/ppthon/python-training:/scripts" kneron/toolchain:latest
     步驟五：使用cd /docker_mount和ls -l去檢查有沒有掛載到docker裡面。正確的話，話應該要透過ls成功顯示“image_ddata"、"ViT-B-32_0827.onnx"和"optimize_onnx2NEF.py”。
     步驟六：接著輸入“python /docker_mount/optimize_onnx2NEF.py”(如果你cd沒有在mount裡面則是“python optimize_onnx2NEF.py”)，即可跑optimize_onnx2NEF.py這份程式碼。
-#optimize_onnx2NEF.py的作用是去optimize onnx，接著進行inference、Qauntilization，最後轉NEF檔
-#CLIP onnx opset 18是我自行train後的分類模型，他能夠根據你給的主題prompt去把圖片進行分類
+# optimize_onnx2NEF.py的作用是去optimize onnx，接著進行inference、Qauntilization，最後轉NEF檔
+# CLIP onnx opset 18是我自行train後的分類模型，他能夠根據你給的主題prompt去把圖片進行分類
 ![onnx_ph_result](https://github.com/user-attachments/assets/36952fa8-6005-451f-bee5-4cb5f5308e83)
